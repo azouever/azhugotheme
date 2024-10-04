@@ -1,0 +1,52 @@
+{{ define "main" }}
+{{- partial "header.html" . -}}
+<div id="wrapper">
+<div class="blogdetail">
+  <header>
+    <h2>{{ .Title }}</h2>
+  </header>
+
+  <div class="blogcontent">
+    {{ .Content }}
+    {{ if and .Date (eq .Type "blog")}}
+    <hr class="break-line">
+      <time>本文由 {{ .Params.author }} 发表于 {{ .Date.Local | time.Format "2006-01-02 15:04:05" }}</time>
+      {{ $tags := "" }}
+      {{ range .Params.tags }}
+        {{ $tags = (print $tags " #" .) }}
+      {{ end }}
+      <p>> 可在下面留言（需要有 GitHub 账号）</p>
+      <script src="https://utteranc.es/client.js"
+        repo="azouever/blog"
+        issue-term="pathname"
+        theme="github-dark"
+        crossorigin="anonymous"
+        async>
+      </script>
+    {{ end }}
+  </div>
+
+  {{ if eq .Type "blog" }}
+
+  <footer>
+    <hr class="break-line">
+    <div class="license">
+      <p>除特别注明外，所有文章均采用<a href="http://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh" target="_blank">Creative Commons BY-NC-ND 4.0（自由转载-保持署名-非商用-禁止演绎）协议</a>发布。更多说明，请看<a href="/about">关于本站</a>。</p>
+    </div>
+    <hr class="break-line">
+    {{ partial "gads.html" . }}
+    {{ $related := (where site.RegularPages "Type" "in" site.Params.mainSections).Related . | first 5 }}
+    {{ with $related }}
+    <div class="releated-posts">
+      <h3>相关文章</h3>
+      {{ range . }}
+      <p><a href="{{ .RelPermalink }}">{{ .Title }}</a></p>
+      {{ end }}
+    </div>
+    {{ end }}
+  </footer>
+
+  {{ end }}
+</div>
+</div>
+{{ end }}

@@ -1,0 +1,12 @@
+name        = "azhugotheme"
+license     = "MIT"
+licenselink = ""
+description = "A simple hugo theme"
+homepage    = "http://azou.tech/"
+tags        = ["simple"]
+features    = []
+min_version = "0.41.0"
+
+[author]
+  name     = "azou"
+  homepage = "https://github.com/azouever"
